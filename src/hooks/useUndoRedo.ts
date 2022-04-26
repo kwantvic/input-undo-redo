@@ -21,7 +21,7 @@ type Action = {
 }
 
 const initState: State = {
-    index: 0,
+    index: -1,
     text: []
 }
 
@@ -34,12 +34,12 @@ const reducer = ({index, text}: State, action: Action): State => {
             };
         case ActionType.UNDO:
             return {
-                index: Math.min(index + 1, text.length),
+                index: Math.max(index - 1, -1),
                 text
             };
         case ActionType.REDO:
             return {
-                index: Math.max(index, 0),
+                index: Math.min(index + 1, text.length - 1),
                 text
             };
         default:
@@ -50,9 +50,9 @@ const reducer = ({index, text}: State, action: Action): State => {
 export function useUndoRedo(): [string, (payload: string) => void, () => void, () => void] {
     const [{index, text}, dispatch] = React.useReducer(reducer, initState);
     return [
-        text[index],
-        (payload: string) => dispatch({type: ActionType.PUSH, payload}),
-        () => dispatch({type: ActionType.UNDO}),
-        () => dispatch({type: ActionType.REDO})
+        text[index] || "",
+        React.useCallback((payload: string) => dispatch({type: ActionType.PUSH, payload}), []),
+        React.useCallback(() => dispatch({type: ActionType.UNDO}), []),
+        React.useCallback(() => dispatch({type: ActionType.REDO}), [])
     ];
 }
