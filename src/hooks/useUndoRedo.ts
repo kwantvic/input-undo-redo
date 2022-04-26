@@ -47,7 +47,7 @@ const reducer = ({index, text}: State, action: Action): State => {
     }
 }
 
-export function useUndoRedo() {
+export function useUndoRedo(): [string, (payload: string) => void, () => void, () => void] {
     const [{index, text}, dispatch] = React.useReducer(reducer, initState);
     return [
         text[index],
