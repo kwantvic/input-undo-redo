@@ -1,3 +1,22 @@
 .App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
 
+.header {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-block input {
+    margin-bottom: 10px;
 }
