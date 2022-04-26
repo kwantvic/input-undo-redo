@@ -11,14 +11,14 @@ export const App: React.FC = React.memo(() => {
             <div className="header">
                 <button onClick={toUndo}>undo</button>
                 <button onClick={toRedo}>redo</button>
-                <button onClick={() => toPush("")}>clear</button>
+                <button onClick={React.useCallback(() => toPush(""), [toPush])}>clear</button>
             </div>
             <div className="input-block">
                 <input value={text}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => toPush(e.target.value)}
+                       onChange={React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => toPush(e.target.value), [toPush])}
                     type="text"
                 />
-                <button onClick={() => toAddNewItem(text)}>save</button>
+                <button onClick={React.useCallback(() => toAddNewItem(text), [toAddNewItem, text])}>save</button>
             </div>
             <ul className="result">
                 {React.useMemo(() => items.map((item, index) => (
