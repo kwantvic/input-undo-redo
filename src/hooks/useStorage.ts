@@ -4,6 +4,7 @@ export function useStorage() {
     const [storage, setStorage] = React.useState<string[]>([]);
 
     return [
-        storage
-    ]
+        storage,
+        React.useCallback((newItem: string) => setStorage((storage) => [...storage, newItem]), [])
+]
 }
