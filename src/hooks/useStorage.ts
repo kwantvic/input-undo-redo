@@ -1,6 +1,6 @@
 import React from "react";
 
-export function useStorage() {
+export function useStorage(): [string[], (newItem: string) => void] {
     const [storage, setStorage] = React.useState<string[]>([]);
 
     return [
